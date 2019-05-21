@@ -87,7 +87,7 @@ def setup_python_workspace():
         visibility = ["//visibility:public"],
     )
 
-    native.register_toolchains(":python_toolchain")
+    native.register_toolchains("@//:python_toolchain")
 
 def setup_python_targets():
     py_runtime_pair(
