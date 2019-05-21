@@ -33,7 +33,7 @@ def _python_source_impl(ctx):
     if not make:
         fail("make not found")
 
-    ctx.report_progress("Configuring " + ctx.name)
+    ctx.report_progress("configuring")
     configure_python = ctx.execute(
         ["./configure"],
         quiet = quiet,
@@ -41,7 +41,7 @@ def _python_source_impl(ctx):
     if not configure_python:
         fail("Configure step failed")
 
-    ctx.report_progress("Building " + ctx.name)
+    ctx.report_progress("building")
     make_succeeded = ctx.execute(
         [make],
         quiet = quiet,
