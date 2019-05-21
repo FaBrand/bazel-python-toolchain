@@ -25,7 +25,7 @@ def _python_source_impl(ctx):
         stripPrefix = ctx.attr.strip_prefix,
     )
 
-    quiet = False
+    quiet = True
     if not loaded:
         fail("Download of {} failed".format(ctx.attr.url))
 
@@ -74,6 +74,7 @@ def setup_python_workspace():
     _python_source(
         name = "python3",
         python_version = "PY3",
+        sha256 = "d62e3015f2f89c970ac52343976b406694931742fbde2fed8d1ce8ebb4e1f8ff",
         strip_prefix = "Python-3.7.3",
         url = "https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz",
         visibility = ["//visibility:public"],
@@ -82,6 +83,7 @@ def setup_python_workspace():
     _python_source(
         name = "python2",
         python_version = "PY2",
+        sha256 = "304c9b202ea6fbd0a4a8e0ad3733715fbd4749f2204a9173a58ec53c32ea73e8",
         strip_prefix = "Python-2.7.14",
         url = "https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tgz",
         visibility = ["//visibility:public"],
