@@ -30,5 +30,31 @@ From https://launchpad.net/ubuntu/bionic/amd64/libpython3.7-minimal/3.7.1-1~18.0
 From https://launchpad.net/ubuntu/bionic/amd64/libpython3.7-stdlib/3.7.0~a2-1
 - http://launchpadlibrarian.net/341324234/libpython3.7-stdlib_3.7.0~a2-1_amd64.deb
 
-==================================================================================
+
+#### Usage example:
+```python
+# WORKSPACE
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+    name = "debian_repository_rules",
+    branch = "master",
+    remote = "https://github.com/fabrand/debian_repository_rules",
+)
+
+load("@debian_repository_rules//:debian.bzl", "debian_archive")
+
+git_repository(
+    name = "com_fabrand_python_runtimes",
+    branch = "master",
+    remote = "https://github.com/FaBrand/bazel-python-toolchain.git",
+)
+
+load("@com_fabrand_python_runtimes//:python_runtimes.bzl", "setup_python_workspace")
+
+setup_python_workspace()
+```
+
+-------------------------------------------------------------------------
+
 Currently only works for linux
