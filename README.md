@@ -58,3 +58,16 @@ setup_python_workspace()
 -------------------------------------------------------------------------
 
 Currently only works for linux
+
+
+#### Known Problems:
+
+libc6 is still loaded from the host system and may fail.
+I encountered this with python3 tests failing on travis ci which uses ubuntu 16 which has version 2.23 installed by default.
+Python3.7 requires atleast version 2.25 and fails with:
+```bash
+==================== Test output for //test:python3_test:
+/home/travis/.cache/bazel/_bazel_travis/094c46a7897403427a68fa2c7ef9be9c/sandbox/linux-sandbox/2/execroot/com_fabrand_python_runtimes/bazel-out/k8-fastbuild/bin/test/python3_test.runfiles/python3/usr/bin/python3.7: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.25' not found (required by /home/travis/.cache/bazel/_bazel_travis/094c46a7897403427a68fa2c7ef9be9c/sandbox/linux-sandbox/2/execroot/com_fabrand_python_runtimes/bazel-out/k8-fastbuild/bin/test/python3_test.runfiles/python3/usr/bin/python3.7)
+/home/travis/.cache/bazel/_bazel_travis/094c46a7897403427a68fa2c7ef9be9c/sandbox/linux-sandbox/2/execroot/com_fabrand_python_runtimes/bazel-out/k8-fastbuild/bin/test/python3_test.runfiles/python3/usr/bin/python3.7: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.26' not found (required by /home/travis/.cache/bazel/_bazel_travis/094c46a7897403427a68fa2c7ef9be9c/sandbox/linux-sandbox/2/execroot/com_fabrand_python_runtimes/bazel-out/k8-fastbuild/bin/test/python3_test.runfiles/python3/usr/bin/python3.7)
+================================================================================
+```
