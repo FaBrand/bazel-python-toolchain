@@ -1,101 +1,46 @@
 load("@bazel_tools//tools/python:toolchain.bzl", "py_runtime_pair")
-
-_DEFAULT_BUILD_FILE_TEMPLATE = """package(default_visibility = ["//visibility:public"])
-
-py_runtime(
-    name = "{name}",
-    files = ["python"],
-    interpreter = "python",
-    python_version = "{python_version}",
-)
-"""
-
-def _get_number_of_cores(ctx):
-    nproc = ctx.which("nproc")
-    if not nproc:
-        fail("nproc not found")
-    output = ctx.execute([nproc])
-    return output.stdout
-
-def _python_source_impl(ctx):
-    loaded = ctx.download_and_extract(
-        url = [ctx.attr.url],
-        output = "",
-        sha256 = ctx.attr.sha256,
-        stripPrefix = ctx.attr.strip_prefix,
-    )
-
-    quiet = True
-    if not loaded:
-        fail("Download of {} failed".format(ctx.attr.url))
-
-    make = ctx.which("make")
-    if not make:
-        fail("make not found")
-
-    ctx.report_progress("configuring")
-    configure_python = ctx.execute(
-        ["./configure"],
-        quiet = quiet,
-    )
-    if not configure_python:
-        fail("Configure step failed")
-
-    ctx.report_progress("building")
-    make_succeeded = ctx.execute(
-        [make],
-        quiet = quiet,
-    )
-
-    if not make_succeeded:
-        fail("Make failed")
-
-    build_file_content = _DEFAULT_BUILD_FILE_TEMPLATE.format(
-        name = ctx.name,
-        python_version = ctx.attr.python_version,
-    )
-
-    ctx.file("BUILD.bazel", build_file_content)
-    ctx.file("WORKSPACE", "")
-
-_python_source = repository_rule(
-    attrs = {
-        "sha256": attr.string(default = ""),
-        "url": attr.string(default = ""),
-        "strip_prefix": attr.string(default = ""),
-        "runtime": attr.string(default = ""),
-        "python_version": attr.string(default = ""),
-    },
-    local = False,
-    implementation = _python_source_impl,
-)
+load("@debian_repository_rules//:debian.bzl", "debian_archive")
 
 def setup_python_workspace():
-    _python_source(
+    debian_archive(
         name = "python3",
+        build_file_content = """py_runtime(
+        name = "runtime",
+        files = glob(["usr/lib/**/*"]),
+        interpreter = "usr/bin/python3.7",
         python_version = "PY3",
-        sha256 = "d62e3015f2f89c970ac52343976b406694931742fbde2fed8d1ce8ebb4e1f8ff",
-        strip_prefix = "Python-3.7.3",
-        url = "https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz",
         visibility = ["//visibility:public"],
+    )""",
+        urls = {
+            "http://launchpadlibrarian.net/394585029/python3.7-minimal_3.7.1-1~18.04_amd64.deb": "4ddc47a919f35d938e526f6e29722e6f50eaf56d8fc8b80d6be4cdd9b8f26e54",
+            "http://launchpadlibrarian.net/394585020/libpython3.7-minimal_3.7.1-1~18.04_amd64.deb": "38a61fb89e87c9fc904a1693809921bed0735e2e467a8daaa9bd5381e3e3b848",
+            "http://launchpadlibrarian.net/341324234/libpython3.7-stdlib_3.7.0~a2-1_amd64.deb": "c1bb1baeb1827354c18eb4619fbc08cfe32b5ac2ea2449ae7dccb041d9733c16",
+        },
     )
 
-    _python_source(
+    debian_archive(
         name = "python2",
+        build_file_content = """py_runtime(
+        name = "runtime",
+        files = glob(["usr/lib/**/*"]),
+        interpreter = "usr/bin/python2.7",
         python_version = "PY2",
-        sha256 = "304c9b202ea6fbd0a4a8e0ad3733715fbd4749f2204a9173a58ec53c32ea73e8",
-        strip_prefix = "Python-2.7.14",
-        url = "https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tgz",
         visibility = ["//visibility:public"],
+    )""",
+        urls = {
+            "http://launchpadlibrarian.net/365645427/python2.7-minimal_2.7.15~rc1-1_amd64.deb": "018cf986dbd030a175bfc27cda1a98416a713d247abf5696e528314e8cfb948d",
+            "http://launchpadlibrarian.net/412143380/libpython2.7-minimal_2.7.15-4ubuntu4~18.04_amd64.deb": "32861db45d9af6b5db8378ddbbc767dd9a7ff1274915def9ba44dab360bba352",
+            "http://launchpadlibrarian.net/412143382/libpython2.7-stdlib_2.7.15-4ubuntu4~18.04_amd64.deb": "9eec69d84e3b04e4bc965346c43aaba2bcd36cfdd3133f8540ee535c59421af8",
+        },
     )
 
-    native.register_toolchains("@//:python_toolchain")
+    native.register_toolchains("//:python_toolchain")
 
 def setup_python_targets():
     py_runtime_pair(
         name = "py_runtime_pair",
-        py2_runtime = "@python2",
-        py3_runtime = "@python3",
+        py2_runtime = "@python2//:runtime",
+        py3_runtime = "@python3//:runtime",
         visibility = ["//visibility:public"],
     )
 
