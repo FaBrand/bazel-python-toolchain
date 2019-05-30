@@ -15,8 +15,6 @@ def setup_python_workspace():
             "http://launchpadlibrarian.net/394585029/python3.7-minimal_3.7.1-1~18.04_amd64.deb": "4ddc47a919f35d938e526f6e29722e6f50eaf56d8fc8b80d6be4cdd9b8f26e54",
             "http://launchpadlibrarian.net/394585020/libpython3.7-minimal_3.7.1-1~18.04_amd64.deb": "38a61fb89e87c9fc904a1693809921bed0735e2e467a8daaa9bd5381e3e3b848",
             "http://launchpadlibrarian.net/341324234/libpython3.7-stdlib_3.7.0~a2-1_amd64.deb": "c1bb1baeb1827354c18eb4619fbc08cfe32b5ac2ea2449ae7dccb041d9733c16",
-            "http://launchpadlibrarian.net/365856922/libc6_2.27-3ubuntu1_amd64.deb": "1e1eb86fd646aa68f7144ec692b837b6b352d215880c6a2d0c92c19d36938427",
-            "http://launchpadlibrarian.net/400343104/libssl1.1_1.1.0g-2ubuntu4.3_amd64.deb": "336c4c6875f647a1e96fdda6bbb47c6bb56dbed0d30c73838fb0fb1890ef6ab6",
         },
     )
 

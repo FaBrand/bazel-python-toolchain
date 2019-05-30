@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.com/FaBrand/bazel_python_toolchain.svg?branch=master)](https://travis-ci.com/FaBrand/bazel_python_toolchain)
 # Python toolchain
 Python toolchains for usage with bazel >= 0.25.0
 Provides and registers python toolchains for python 2 and python 3
