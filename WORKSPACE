@@ -1,6 +1,6 @@
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-
 workspace(name = "com_fabrand_python_runtimes")
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
     name = "debian_repository_rules",
