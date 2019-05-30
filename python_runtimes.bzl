@@ -34,7 +34,7 @@ def setup_python_workspace():
         },
     )
 
-    native.register_toolchains("//:python_toolchain")
+    native.register_toolchains("@com_fabrand_python_runtimes//:python_toolchain")
 
 def setup_python_targets():
     py_runtime_pair(
@@ -46,7 +46,7 @@ def setup_python_targets():
 
     native.toolchain(
         name = "python_toolchain",
-        toolchain = ":py_runtime_pair",
+        toolchain = "@com_fabrand_python_runtimes//:py_runtime_pair",
         toolchain_type = "@bazel_tools//tools/python:toolchain_type",
         visibility = ["//visibility:public"],
     )

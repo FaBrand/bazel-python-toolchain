@@ -1,17 +1,34 @@
-### Python toolchain
+# Python toolchain
+Python toolchains for usage with bazel >= 0.25.0
+Provides and registers python toolchains for python 2 and python 3
+Packages are downloaded using https://github.com/FaBrand/debian_repository_rules
 
-This is a (probably impractical) attempt to create a python toolchain.
-It downloads the python sources and uses the hosts configuration to execute
-the basic build commands to build python from source. (see [python docs](https://docs.python.org/3/using/unix.html#building-python))
-```bash
-./configure
-./make
-```
 
-After that the built interpreter is set as the python toolchain and can be tested with 
+#### Python 2 toolchain
+###### Version:
+Python 2.7.15.rc1-1
+###### Included debian packages:
+From https://launchpad.net/ubuntu/cosmic/amd64/python2.7-minimal/2.7.15~rc1-1
+- http://launchpadlibrarian.net/365645427/python2.7-minimal_2.7.15~rc1-1_amd64.deb
 
-```bash
-bazel test //test/...
-```
+From https://launchpad.net/ubuntu/bionic/amd64/libpython2.7-minimal
+- http://launchpadlibrarian.net/412143380/libpython2.7-minimal_2.7.15-4ubuntu4~18.04_amd64.deb
 
-###### Currently only works for linux
+From https://launchpad.net/ubuntu/bionic/amd64/libpython2.7-stdlib
+- http://launchpadlibrarian.net/412143382/libpython2.7-stdlib_2.7.15-4ubuntu4~18.04_amd64.deb
+
+#### Python 3 toolchain
+###### Version:
+Python 3.7.1-1
+###### Included debian packages:
+From https://launchpad.net/ubuntu/bionic/amd64/python3.7-minimal/3.7.1-1~18.04
+- http://launchpadlibrarian.net/394585029/python3.7-minimal_3.7.1-1~18.04_amd64.deb
+
+From https://launchpad.net/ubuntu/bionic/amd64/libpython3.7-minimal/3.7.1-1~18.04
+- http://launchpadlibrarian.net/394585020/libpython3.7-minimal_3.7.1-1~18.04_amd64.deb
+
+From https://launchpad.net/ubuntu/bionic/amd64/libpython3.7-stdlib/3.7.0~a2-1
+- http://launchpadlibrarian.net/341324234/libpython3.7-stdlib_3.7.0~a2-1_amd64.deb
+
+==================================================================================
+Currently only works for linux
