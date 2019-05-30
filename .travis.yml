@@ -13,6 +13,8 @@ before_install:
   - chmod +x ~/.local/bin/bazel
   - echo "common --announce_rc" >> ~/.bazelrc
   - echo "common --curses=no" >> ~/.bazelrc
+  - sudo apt-get update
+  - sudo apt-get install libc6
 
 script:
   - bazel test //...
