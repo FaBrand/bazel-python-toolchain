@@ -1,0 +1,20 @@
+dist: bionic
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - wget
+
+before_install:
+  - mkdir -p ~/.local/bin
+  - wget https://github.com/philwo/bazelisk/releases/download/v0.0.5/bazelisk-linux-amd64 -O ~/.local/bin/bazel
+  - chmod +x ~/.local/bin/bazel
+  - echo "common --announce_rc" >> ~/.bazelrc
+  - echo "common --curses=no" >> ~/.bazelrc
+
+script:
+  - bazel test //...
+
+
